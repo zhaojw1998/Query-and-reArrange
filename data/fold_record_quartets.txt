@@ -1,0 +1,77 @@
+fold 0
+Dvorak-1931_dv96_2.npz
+Beethoven-2622_qt07_2.npz
+Beethoven-2451_qt06_2.npz
+Haydn-2106_op64n5_3.npz
+Mozart-1791_kv_465_4.npz
+
+fold 1
+Beethoven-2562_qt02_4.npz
+Mozart-1793_kv_465_2.npz
+Beethoven-2377_qt08_2.npz
+Mozart-1792_kv_465_1.npz
+Haydn-2104_op64n5_1.npz
+Beethoven-2433_qt16_3.npz
+
+fold 2
+Beethoven-2382_qt13_2.npz
+Beethoven-2379_qt08_4.npz
+Dvorak-1919_dvqt10m4.npz
+Beethoven-2432_qt16_2.npz
+Beethoven-2366_qt12_2.npz
+Dvorak-1933_dv96_4.npz
+
+fold 3
+Haydn-2105_op64n5_2.npz
+Brahms-2138_br51n1m2.npz
+Beethoven-2431_qt16_1.npz
+Mozart-1789_kv_465_2.npz
+Beethoven-2621_qt07_1.npz
+
+fold 4
+Beethoven-2560_qt02_2.npz
+Beethoven-2481_qt05_2.npz
+Beethoven-2314_qt15_2.npz
+Ravel-2177_gr_rqtf1.npz
+Beethoven-2384_qt13_4.npz
+Dvorak-1932_dv96_3.npz
+
+fold 5
+Ravel-2180_gr_rqtf4.npz
+Mozart-1822_kv_421_1.npz
+Brahms-2140_br51n1m4.npz
+Beethoven-2383_qt13_3.npz
+Mozart-1859_kv_464_2.npz
+Mozart-1824_kv_421_3.npz
+
+fold 6
+Mozart-1790_kv_465_3.npz
+Mozart-1807_kv_387_3.npz
+Beethoven-2480_qt05_1.npz
+Beethoven-2315_qt15_3.npz
+Beethoven-2376_qt08_1.npz
+
+fold 7
+Beethoven-2381_qt13_1.npz
+Beethoven-2497_qt11_4.npz
+Beethoven-2483_qt05_4.npz
+Beethoven-2403_qt01_4.npz
+Mozart-1805_kv_387_1.npz
+Mozart-1835_kv_590_3.npz
+
+fold 8
+Beethoven-2494_qt11_1.npz
+Dvorak-1923_dvqt10m4.npz
+Beethoven-2368_qt12_4.npz
+Mozart-1788_kv_465_1.npz
+Dvorak-1916_dvq10m1.npz
+Beethoven-2313_qt15_1.npz
+
+fold 9
+Dvorak-1918_dvqt10m3.npz
+Ravel-2178_gr_rqtf2.npz
+Beethoven-2365_qt12_1.npz
+Ravel-2179_gr_rqtf3.npz
+Dvorak-1922_dvqt10m3.npz
+Beethoven-2482_qt05_3.npz
+
