@@ -1,3 +1,2 @@
 *.pyc
-checkpoints/Q&A_chorales_epoch_041.pt
 checkpoints/Q&A_quartets_epoch_029.pt
