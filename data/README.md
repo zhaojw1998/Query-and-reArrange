@@ -2,7 +2,11 @@
 
 We release our processed datasets, as well as scripts for data processing, to facilitate follow-up research.
 
-We use a total of 4 datasets in our work: piano arrangement [POP909](https://github.com/music-x-lab/POP909-Dataset), multi-track arrangement [Slakh2100](https://zenodo.org/record/4599666), Bach Chorales in [Music21](https://pypi.org/project/music21/), and String Quartets in [MusicNet](https://zenodo.org/record/5120004).
+We use a total of 4 datasets in our work: 
+* piano arrangement [POP909](https://github.com/music-x-lab/POP909-Dataset);
+* multi-track arrangement [Slakh2100](https://zenodo.org/record/4599666);
+* Bach Chorales in [Music21](https://pypi.org/project/music21/);
+* String Quartets in [MusicNet](https://zenodo.org/record/5120004).
 
 ### File Directory
 Our data folder is organized as follows
