@@ -29,11 +29,11 @@ root
 ## How to run
 * Q&A is now on [Google Colab](https://colab.research.google.com/drive/1N3XeEfTCWNLTuBp9NWPwzW-hq7Ho7nQA?usp=sharing), where you can quickly test our model online.
 * Alternatively, follow the guidance in [`./inference.ipynb`](./inference.ipynb) offline for more in-depth testing. 
-* If you wish to train our model from scratch, run [`./train.py`](./train.py). You may wish to configure a few params such as `BATCH_SIZE` from the beginning of the script. When `DEBUG_MODE=1`, it will load a small portion of data and quickly run through for debugging purpose.
+* If you wish to train our model from scratch, run [`./train.py`](./train.py). You may wish to configure a few params such as `BATCH_SIZE` from the beginning of the script. When `DEBUG_MODE`=$1$, it will load a small portion of data and quickly run through for debugging purpose.
 * Dependencies of our work includes [pytorch](https://pytorch.org/) (ver. >= 1.10), [pretty_midi](https://pypi.org/project/pretty_midi/), [scipy](https://pypi.org/project/scipy/), [tensorboard](https://pypi.org/project/tensorboard/), and [tqdm](https://pypi.org/project/tqdm/2.2.3/).
 
 ## Data
-* For details about the data we use, please refere to ['./data'](./data).
+* For details about the data we use, please refere to [./data](./data).
 
 ## TBD
 * Demo page and more detailed instructions will come out soon!
