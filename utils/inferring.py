@@ -7,7 +7,7 @@ from tqdm import tqdm
 def mixture_function_prior(y_set_loader):
     collect = []
     print('Rendering sample space for style references ...')
-    for (_, _, function_pitch, function_time), (_, _, _), _ in tqdm(y_set_loader, total=len(y_set_loader)):
+    for (_, _, function_pitch, function_time), _, _ in tqdm(y_set_loader, total=len(y_set_loader)):
         collect.append(torch.cat([
                                 torch.sum(function_pitch, dim=1).reshape(-1),
                                 torch.sum(function_time, dim=1).reshape(-1)

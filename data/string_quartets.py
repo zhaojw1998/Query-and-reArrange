@@ -5,11 +5,12 @@ import muspy
 import glob
 import os
 
+# This script is with credit to [Dong et al., 2021] https://github.com/salu133445/arranger/blob/main/arranger/data/collect_musicnet.py
 
 
-
-meta_info = pd.read_csv("/data1/zhaojw/musicnet/musicnet_metadata.csv")
-musicnet_midi_dir = '/data1/zhaojw/musicnet/musicnet_midis/'
+# Get MusicNet dataset from https://zenodo.org/record/5120004.
+meta_info = pd.read_csv("./data/musicnet/musicnet_metadata.csv")
+musicnet_midi_dir = './data/musicnet/musicnet_midis/'
 meta_info = meta_info[meta_info.ensemble == 'String Quartet']
 
 SPECIAL_FILES = {
@@ -19,7 +20,6 @@ SPECIAL_FILES = {
     "2138_br51n1m2": ["Violin 1", "Violin 2"] * 2 + ["Viola"] + ["Cello"] * 3,
     "2140_br51n1m4": ["Violin 1", "Violin 2", "Viola", "Cello", "Cello"],
 }
-
 
 def get_instrument(name):
     """Return the instrument inferred from the track name."""
@@ -34,8 +34,6 @@ def get_instrument(name):
         if key == name.lower():
             return "Violin 2"
     return None
-
-
 
 for idx in tqdm(meta_info.id):
     composer = meta_info[meta_info.id==idx].composer	
@@ -76,7 +74,7 @@ for idx in tqdm(meta_info.id):
 
         
 
-    np.savez_compressed(f"/data1/zhaojw/musicnet/4_bin_quantization/{composer.values[0]}-{midi_dir.split('/')[-1].replace('.mid', '.npz')}", \
+    np.savez_compressed(f"./data/String_Quartets/{composer.values[0]}-{midi_dir.split('/')[-1].replace('.mid', '.npz')}", \
                                 violin1 = quartet['Violin 1'], \
                                 violin2 = quartet['Violin 2'], \
                                 viola = quartet['Viola'], \

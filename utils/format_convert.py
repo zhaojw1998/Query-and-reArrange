@@ -182,49 +182,9 @@ def matrix2midi_with_dynamics(matrices, programs, init_tempo=120, time_start=0, 
     return midi_recon
 
 
-def matrix2midi_drum(matrices, programs, init_tempo=120, time_start=0, ACC=64):
-        """
-        Reconstruct a multi-track midi from a 3D matrix of shape (Track. Time, 128, 3).
-        """
-        tracks = []
-        for pogram in range(len(programs)):
-            track_recon = pyd.Instrument(program=int(pogram), is_drum=True, name='drums')
-            tracks.append(track_recon)
-
-        indices_track, indices_onset, indices_pitch = np.nonzero(matrices[:, :, :, 0])
-        alpha = 1 / (ACC // 4) * 60 / init_tempo #timetep between each quntization bin
-        for idx in range(len(indices_track)):
-            track_id = indices_track[idx]
-            onset = indices_onset[idx]
-            pitch = indices_pitch[idx]
-
-            start = onset * alpha
-            duration = matrices[track_id, onset, pitch, 0] * alpha
-            velocity = matrices[track_id, onset, pitch, 1]
-
-            note_recon = pyd.Note(velocity=int(velocity), pitch=int(pitch), start=time_start + start, end=time_start + start + duration)
-            tracks[track_id].notes.append(note_recon)
-
-        for idx in range(len(matrices)):
-            cc = []
-            control_matrix = matrices[idx, :, :, 2]
-            for t, n in zip(*np.nonzero(control_matrix > -1)):
-                start = alpha * t
-                cc.append(pyd.ControlChange(int(n), int(control_matrix[t, n]), start))
-            tracks[idx].control_changes = cc
-        
-        midi_recon = pyd.PrettyMIDI(initial_tempo=init_tempo)
-        midi_recon.instruments = tracks
-        return midi_recon
-
-
-def elem2midi(tracks, programs, dynamics, dir, program_check, tempo=100):
-    dynam, drums, drum_programs = dynamics
-    tracks = np.concatenate([tracks[..., np.newaxis], dynam], axis=-1)
+def dataitem2midi(tracks, programs, dynamics, dir, program_check, tempo=100):
+    tracks = np.concatenate([tracks[..., np.newaxis], dynamics], axis=-1)
     midi_recon = matrix2midi_with_dynamics(tracks, [program_check[prog]  for prog in programs], tempo)
-    if drums is not None:
-        drum_recon = matrix2midi_drum(drums, drum_programs, tempo)
-        midi_recon.instruments += drum_recon.instruments
     return midi_recon
 
 

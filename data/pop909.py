@@ -110,10 +110,12 @@ def retrieve_control(pop909_midi_dir, song, tracks):
     return pr_matrices[:, :, :, 2: 3], st.mode(diff).mode[0]
 
 
-pop909_4bin_dir = '/data1/zhaojw/Q&A/POP909-Dataset/quantization/POP09-PIANOROLL-4-bin-quantization/'
-pop909_midi_dir = '/data1/zhaojw/Q&A/POP909-Dataset/POP909/'
+# Get raw MIDI of POP909 from https://github.com/music-x-lab/POP909-Dataset
+pop909_midi_dir = './data/POP09-Dataset/' 
+# To get 4-bin quantized version, contact ziyu.wang @nyu.edu. Credit to [Wang et al., 2020] https://github.com/ZZWaang/polyphonic-chord-texture-disentanglement
+pop909_4bin_dir = './data/POP09-PIANOROLL-4-bin-quantization/' 
 meta_info = pd.read_excel(os.path.join(pop909_midi_dir, 'index.xlsx'))
-save_root = '/data1/zhaojw/Q&A/POP909-Dataset/quantization/4_bin_midi_quantization_with_dynamics_and_chord/'
+save_root = './data/POP09/'
 
 for split in ['train', 'validation', 'test']:
     save_split = os.path.join(save_root, split)
@@ -164,7 +166,7 @@ for split in ['train', 'validation', 'test']:
         #print(chord_matrices.shape)
         #print(downbeat_indicator.shape)
 
-        np.savez(os.path.join(save_split, song),\
+        np.savez_compressed(os.path.join(save_split, song),\
                     tracks = pr_matrices,\
                     db_indicator = downbeat_indicator,\
                     dynamics = dynamic_matrices)

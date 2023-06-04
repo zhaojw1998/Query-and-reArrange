@@ -74,21 +74,18 @@ EMBED_PROGRAM_MAPPING = dict({
 
 
 class Slakh2100_Pop909_Dataset(Dataset):
-    def __init__(self, slakh_dir, pop909_dir, sample_len=SAMPLE_LEN, hop_len=BAR_HOP_LEN, debug_mode=False, split='train', mode='train', with_dynamics=False, with_drums=False, merge_pop909=0):
+    def __init__(self, slakh_dir, pop909_dir, sample_len=SAMPLE_LEN, hop_len=BAR_HOP_LEN, debug_mode=False, split='train', mode='train', with_dynamics=False, merge_pop909=0):
         super(Slakh2100_Pop909_Dataset, self).__init__()
         self.split = split
         self.mode = mode
         self.debug_mode = debug_mode
 
         self.with_dynamics = with_dynamics
-        self.with_drums = with_drums
         self.merge_pop909 = merge_pop909
 
         self.memory = dict({'tracks': [],
                             'programs': [],
                             'dynamics': [],
-                            'drums': [],
-                            'drum_programs': [],
                             'dir': []
                             })
         self.anchor_list = []
@@ -122,13 +119,8 @@ class Slakh2100_Pop909_Dataset(Dataset):
             dynamics = self.memory['dynamics'][song_id][:, start: start+self.sample_len]
         else: 
             dynamics = None
-        if self.with_drums:
-            drums = self.memory['drums'][song_id][:, start*4: (start+self.sample_len)*4]
-            drum_programs = self.memory['drum_programs'][song_id]
-        else:
-            drums, drum_programs = None, None
         
-        return tracks_sample, program_sample, (dynamics, drums, drum_programs), self.memory['dir'][song_id]
+        return tracks_sample, program_sample, dynamics, self.memory['dir'][song_id]
 
 
     def slakh_program_mapping(self, programs):
@@ -169,9 +161,6 @@ class Slakh2100_Pop909_Dataset(Dataset):
 
             if self.with_dynamics:
                 self.memory['dynamics'].append(song_data['dynamics'])
-            if self.with_drums:
-                self.memory['drums'].append(song_data['drums'])
-                self.memory['drum_programs'].append(song_data['drum_programs'])
 
 
 def collate_fn(batch, device, pitch_shift=True):
@@ -191,7 +180,7 @@ def collate_fn(batch, device, pitch_shift=True):
     else:
         aug_shift = 0
 
-    for pr, programs, (_, _, _), _ in batch:
+    for pr, programs, _, _ in batch:
         pr = pr_mat_pitch_shift(pr, aug_shift)
         aux, fp, ft = compute_pr_feat(pr)
         mask.append([0]*len(pr) + [1]*(max_tracks-len(pr)))
@@ -223,7 +212,7 @@ def collate_fn(batch, device, pitch_shift=True):
 
 def collate_fn_inference(batch, device):
     assert len(batch) == 1
-    tracks, instrument, (dynamics, drums, drum_programs), song_dir = batch[0]
+    tracks, instrument, dynamics, song_dir = batch[0]
 
     track, time, _ = tracks.shape
     if time % 32 != 0:
@@ -232,9 +221,6 @@ def collate_fn_inference(batch, device):
         if dynamics is not None:
             dynamics = np.pad(dynamics, ((0, 0), (0, pad_len), (0, 0), (0, 0)))
             dynamics[:, -pad_len:, :, -1] = -1
-        if drums is not None:
-            drums = np.pad(drums, ((0, 0), (0, pad_len*4), (0, 0), (0, 0)))
-            drums[:, -pad_len*4:, :, -1] = -1
     tracks = tracks.reshape(track, -1, 32, 128).transpose(1, 0, 2, 3)
 
     _, function_pitch, function_time = compute_pr_feat(tracks)
@@ -246,7 +232,7 @@ def collate_fn_inference(batch, device):
     function_pitch = torch.from_numpy(np.array(function_pitch)).float().to(device)
     function_time = torch.from_numpy(np.array(function_time)).float().to(device)
 
-    return (mixture, instrument, function_pitch, function_time), (dynamics, drums, drum_programs), song_dir
+    return (mixture, instrument, function_pitch, function_time), dynamics, song_dir
     
         
 def pr_mat_pitch_shift(pr_mat, shift):
@@ -348,7 +334,7 @@ class Voice_Separation_Dataset(Dataset):
             vocies_sample = self.memory['voices'][song_id][:, start:]
         program_sample = self.programs
 
-        return vocies_sample, program_sample, (None, None, None), self.memory['dir'][song_id]
+        return vocies_sample, program_sample, None, self.memory['dir'][song_id]
 
 
     def load_data(self, data_dir, sample_len, hop_len):

@@ -24,7 +24,7 @@ TFR = [(0.6, 0), (0.5, 0)]
 LR = 1e-3
 
 MODEL_NAME = 'Query-and-reArrange'
-SAVE_ROOT = '/home/zhaojw/workspace/workspace/Q&A_Rearrangement/repository/log'
+SAVE_ROOT = './log'
 DEBUG = 0
 
 
@@ -33,18 +33,18 @@ model = Query_and_reArrange(name=MODEL_NAME, trf_layers=TRF_LAYERS, device=DEVIC
 #uncomment for voice separation
 #model = Query_and_reArrange_vocie_separation(name=MODEL_NAME, trf_layers=TRF_LAYERS, device=DEVICE).to(DEVICE)
 
-slakh_dir = "/data1/zhaojw/Q&A/slakh2100_flac_redux/4_bin_midi_quantization_with_dynamics_drum_and_chord/"
-pop909_dir = "/data1/zhaojw/Q&A/POP909-Dataset/quantization/4_bin_midi_quantization_with_dynamics_and_chord/"
+slakh_dir = "./data/Slakh2100"
+pop909_dir = "./data/POP909"
 train_set = Slakh2100_Pop909_Dataset(slakh_dir, pop909_dir, debug_mode=DEBUG, split='train', mode='train')
 val_set = Slakh2100_Pop909_Dataset(slakh_dir, pop909_dir, debug_mode=DEBUG, split='validation', mode='train')
 
 #uncomment for voice separation on bach chorales
-#bach_dir = '/data1/zhaojw/Q&A/Bach_Chorales/4_bin_quantization/'
+#bach_dir = './data/Bach_Chorales'
 #train_set = Voice_Separation_Dataset(bach_dir, None, debug_mode=DEBUG, split='train', mode='train', fold=0)
 #val_set = Voice_Separation_Dataset(bach_dir, None, hop_len=2, debug_mode=DEBUG, split='validation', mode='train', fold=0)
 
 #uncomment for voice separation on string quartets
-#quartets_dir = '/data1/zhaojw/Q&A/musicnet/4_bin_quantization/'
+#quartets_dir = './data/String_Quartets'
 #train_set = Voice_Separation_Dataset(None, quartets_dir, debug_mode=DEBUG, split='train', mode='train', fold=0)
 #val_set = Voice_Separation_Dataset(None, quartets_dir, hop_len=2, debug_mode=DEBUG, split='validation', mode='train', fold=0)
 
@@ -65,7 +65,7 @@ params_dic = dict(tfr1=tfr1_scheduler, tfr2=tfr2_scheduler,
                 weights=weights_scheduler)
 param_scheduler = ParameterScheduler(**params_dic)
 
-readme_fn = '/home/zhaojw/workspace/workspace/Q&A_Rearrangement/repository/train.py'
+readme_fn = './train.py'
 log_path_mng = LogPathManager(readme_fn, save_root=SAVE_ROOT, log_path_name=MODEL_NAME)
 
 writer_names = ['loss', 'pno_tree_l', 'pl', 'dl', \

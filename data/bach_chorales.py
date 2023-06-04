@@ -6,9 +6,13 @@ import numpy as np
 from tqdm import tqdm
 
 
+#This script is with credit to [Dong et al., 2021] https://github.com/salu133445/arranger/blob/main/arranger/data/collect_bach.py
+
+
+# Get raw mxl and xml files of Bach chorales from music21
 #for path in music21.corpus.getComposer("bach"):
 #    if path.suffix in (".mxl", ".xml"):
-#        shutil.copyfile(path, "./mxl_files/" + path.name)
+#        shutil.copyfile(path, "./data/Bach_Chorales_mxl/" + path.name)
 
 
 NAMES = {
@@ -49,17 +53,9 @@ SPECIAL_FILES = {
 }
 
 
-for name in tqdm(os.listdir('/data1/zhaojw/Bach_Chorales/mxl/')):
-    m21 = music21.converter.parse(f'/data1/zhaojw/Bach_Chorales/mxl/{name}')
+for name in tqdm(os.listdir('./data/Bach_Chorales_mxl/')):
+    m21 = music21.converter.parse(f'./data/Bach_Chorales_mxl/{name}')
     music = muspy.from_music21_score(m21)
-    
-    #continue_flag = False
-    #for ts in music.time_signatures:
-    #    if not ((ts.numerator == 4) and (ts.denominator == 4)):
-    #        continue_flag = True
-    #if continue_flag:
-    #    continue
-
     music.adjust_resolution(4)
 
     song_len = 0
@@ -92,7 +88,7 @@ for name in tqdm(os.listdir('/data1/zhaojw/Bach_Chorales/mxl/')):
         print(name)
         continue
 
-    np.savez_compressed(f'/data1/zhaojw/Bach_Chorales/4_bin_quantization/{name[:-4]}.npz', \
+    np.savez_compressed(f'./data/Bach_Chorales/{name[:-4]}.npz', \
                             soprano = chorale['Soprano'], \
                             alto = chorale['Alto'], \
                             tenor = chorale['Tenor'], \

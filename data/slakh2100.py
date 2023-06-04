@@ -48,8 +48,10 @@ def midi2matrix(midi, quaver):
 
 ACC = 4 # quantize each beat as 4 positions
 
-slakh_root = '/data1/zhaojw/Q&A/slakh2100_flac_redux/'
-save_root = '/data1/zhaojw/Q&A/slakh2100_flac_redux/4_bin_midi_quantization_with_dynamics_drum_and_chord/'
+
+# Get raw MIDI of Slakh2100 from https://zenodo.org/record/4599666.
+slakh_root = './data/slakh2100_flac_redux/'
+save_root = './data/Slakh2100'
 for split in ['train', 'validation', 'test']:
     slakh_split = os.path.join(slakh_root, split)
     save_split = os.path.join(save_root, split)
@@ -86,19 +88,12 @@ for split in ['train', 'validation', 'test']:
         pr_matrices = []
         programs = []
         dynamic_matrices = []
-        drum_matrices = []
-        drum_programs = []
         
         break_flag = 0
         for idx, midi in enumerate(track_midi):
             meta = track_meta[track_names[idx].replace('.mid', '')]
             if meta['is_drum']:
-                quantize_drum = interp1d(np.array(range(0, len(beats))) * ACC*4, beats, kind='linear')
-                quaver_drum = quantize_drum(np.array(range(0, (len(beats) - 1) * ACC*4)))
-                drum_matrix, prog, _ = midi2matrix(midi, quaver_drum)
-                drum_matrices.append(drum_matrix)
-                drum_programs.append(prog[0])
-                #continue    #let's skip drum for now
+                continue    #let's skip drum for now
             else:
                 pr_matrix, _, track_qt = midi2matrix(midi, quaver)
                 if track_qt[0] > .2:
@@ -113,27 +108,14 @@ for split in ['train', 'validation', 'test']:
         pr_matrices = np.concatenate(pr_matrices, axis=0)
         programs = np.array(programs)
         dynamic_matrices = np.concatenate(dynamic_matrices, axis=0)
-        drum_matrices = np.concatenate(drum_matrices, axis=0)
-        drum_programs = np.array(drum_programs)
 
         downbeat_indicator = np.array([int(t in downbeats) for t in quaver])
 
-        #print(pr_matrices.shape)
-        #print(dynamic_matrices.shape)
-        #print(drum_matrices.shape)
-        #print(chord_matrices.shape)
-        #print(downbeat_indicator.shape)
-        #print(programs)
-        #print(drum_programs)
-        
-
-        np.savez(os.path.join(save_split, f'{song}.npz'),\
+        np.savez_compressed(os.path.join(save_split, f'{song}.npz'),\
                     tracks = pr_matrices,\
                     programs = programs,\
                     db_indicator = downbeat_indicator,\
-                    dynamics = dynamic_matrices, \
-                    drums = drum_matrices,\
-                    drum_programs = drum_programs)
+                    dynamics = dynamic_matrices)
         
         #break
 
