@@ -1,7 +1,7 @@
 # Query-and-reArrange
 <a href="https://colab.research.google.com/drive/1N3XeEfTCWNLTuBp9NWPwzW-hq7Ho7nQA?usp=sharing" rel="nofollow"><img src="https://camo.githubusercontent.com/84f0493939e0c4de4e6dbe113251b4bfb5353e57134ffd9fcab6b8714514d4d1/68747470733a2f2f636f6c61622e72657365617263682e676f6f676c652e636f6d2f6173736574732f636f6c61622d62616467652e737667" alt="Open In Colab" data-canonical-src="https://colab.research.google.com/assets/colab-badge.svg" style="max-width: 100%;"></a>
 
-Repository for Paper: Zhao et al., [Q&A: Query-Based Representation Learning for Multi-Track Symbolic Music re-Arrangement](https://smcnus.comp.nus.edu.sg/archive/pdf/2023/2023_IJCAI_music_rearrangement.pdf), in IJCAI 2023 Special Track for AI the Arts and Creativity.
+Repository for Paper: Zhao et al., [Q&A: Query-Based Representation Learning for Multi-Track Symbolic Music re-Arrangement](https://arxiv.org/abs/2306.01635), in IJCAI 2023 Special Track for AI the Arts and Creativity.
 
 ### Code and File Directory
 This repository is organized as follows:
