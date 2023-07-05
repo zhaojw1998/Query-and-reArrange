@@ -3,6 +3,9 @@
 
 Repository for Paper: Zhao et al., [Q&A: Query-Based Representation Learning for Multi-Track Symbolic Music re-Arrangement](https://arxiv.org/abs/2306.01635), in IJCAI 2023 Special Track for AI the Arts and Creativity.
 
+### Demo page
+[https://zhaojw1998.github.io/Query_and_reArrange](https://zhaojw1998.github.io/Query_and_reArrange)
+
 ### Code and File Directory
 This repository is organized as follows:
 ```
@@ -34,9 +37,6 @@ root
 
 ## Data
 * For details about the data we use, please refere to [./data](./data).
-
-## TBD
-* Demo page and more detailed instructions will come out soon!
 
 ## Contact
 Jingwei Zhao (PhD student in Data Science at NUS)

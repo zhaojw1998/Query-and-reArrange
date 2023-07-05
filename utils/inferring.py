@@ -29,18 +29,12 @@ def search_reference(x_fp, x_ft, y_mix_function_set):
 
 def velocity_adaption(velocity, x_tracks, y_mel=0):
     avg_velocity = np.mean(np.ma.masked_equal(velocity, value=0), axis=(1, 2))
-    mel_velocity = avg_velocity[y_mel]
-    tgt_mel_vel_track = 0
-    for idx, vel in enumerate(avg_velocity):
-        if idx == y_mel:
-            pass
-        if vel > mel_velocity:
-            mel_velocity = vel
-            tgt_mel_vel_track = idx
+    tgt_mel_vel_track = np.argmax(avg_velocity)
     if tgt_mel_vel_track != y_mel:
         tgt_mel_vel = velocity[tgt_mel_vel_track].copy()
         velocity[tgt_mel_vel_track] = velocity[y_mel]
         velocity[y_mel] = tgt_mel_vel
+        avg_velocity = np.mean(np.ma.masked_equal(velocity, value=0), axis=(1, 2))
 
     new_velocity = np.zeros(velocity.shape)
     for idx_tk, track in enumerate(x_tracks):

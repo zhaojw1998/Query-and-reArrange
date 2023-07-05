@@ -43,8 +43,6 @@ Our data folder is organized as follows
     ├──fold_record_chorales.txt     10-fold split record for Bach Chorales 
     │   
     ├──fold_record_quartets.txt     10-fold split record for String Quartets
-    │   
-    ├──slakh_melody_check.json      melody track check table for processed Slakh2100 val and test sets. 
     │ 
     ├──bach_chorales.py             data processing scripts for Bach Chorales
     │   
